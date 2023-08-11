@@ -25,11 +25,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("email", email);
-    console.log("password", password);
-    console.log("displayName", displayName);
     try {
-      console.log("REGISTER_URL", REGISTER_URL);
       const response = await axios.post(REGISTER_URL, {
         user: {
           display_name: displayName,
@@ -37,7 +33,6 @@ const Register = () => {
           password: password,
         },
       });
-      console.log(JSON.stringify(response?.data));
       setSuccess(true);
       setEmail("");
       setPassword("");
@@ -155,12 +150,12 @@ const Register = () => {
                     </button>
                     <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                       Already have an account?
-                      <a
-                        href="/"
+                      <Link
+                        to="/"
                         className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                       >
                         Login here
-                      </a>
+                      </Link>
                     </p>
                   </form>
                 </div>

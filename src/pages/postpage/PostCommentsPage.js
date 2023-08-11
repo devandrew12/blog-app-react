@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from "react";
 import axios from "../../Api/axios";
-import "./post.css";
-import { Link, useParams } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
 
-const PostCommentsPage = () => {
+import "./post.css";
+
+import AuthContext from "../../Context/AuthProvider";
+import CreateComments from "../../components/comments/createComment";
+import EditComment from "../../components/comments/editComment";
+
+const PostCommentsPage = ({ id }) => {
+  const { auth } = useContext(AuthContext);
   const [postComments, setPostComments] = useState([]);
+  const [showCommentForm, setShowCommentForm] = useState(false);
+  const [editCommentId, setEditCommentId] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const { id } = useParams();
-
   const PER_PAGE = 30;
-  
+
   useEffect(() => {
     getPostComments();
   }, [page]);
@@ -104,8 +109,50 @@ const PostCommentsPage = () => {
     }
   };
 
+  const handleCommentAdded = (newComment) => {
+    setPostComments((prevComments) => [...prevComments, newComment]);
+    setShowCommentForm(false); // Hide the CommentForm after adding a comment
+  };
+
+  const handleCommentEdited = (editedComment) => {
+    setPostComments((prevComments) =>
+      prevComments.map((comment) =>
+        comment.id === editedComment.id ? editedComment : comment
+      )
+    );
+  };
+
+  const handleCommentDeleted = async (commentId) => {
+    try {
+      await axios.delete(`/comments/${commentId}`, {
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+        },
+      });
+
+      setPostComments((prevComments) =>
+        prevComments.filter((comment) => comment.id !== commentId)
+      );
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+    }
+  };
+
   return (
     <div>
+      <div>
+        <button
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+          onClick={() => setShowCommentForm(true)}
+        >
+          Add Comment
+        </button>
+        <span className="flex justify-start">
+          {showCommentForm && (
+            <CreateComments postId={id} onCommentAdded={handleCommentAdded} />
+          )}
+        </span>
+      </div>
       {postComments.map((postComment) => (
         <div key={postComment.id}>
           <div className="max-w-2xl content-center rounded overflow-hidden shadow-lg mx-auto text-center">
@@ -125,11 +172,25 @@ const PostCommentsPage = () => {
               <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
                 <p>User: {postComment.user.display_name}</p>
               </span>
-              {/* <span className="inline-block bg-blue-500 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                <Link className="btn btn-blue" to={`/postComments/${postComments.id}`}>
-                  Show
-                </Link>
-              </span> */}
+              <button
+                className="bg-blue-500 hover:bg-blue-700 inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                onClick={() => setEditCommentId(postComment.id)}
+              >
+                Edit Comment
+              </button>
+              {editCommentId === postComment.id && (
+                <EditComment
+                  commentId={postComment.id}
+                  initialContent={postComment.content}
+                  onCommentEdited={handleCommentEdited}
+                />
+              )}
+              <button
+                className="bg-red-500 hover:bg-red-700 inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                onClick={() => handleCommentDeleted(postComment.id)}
+              >
+                Delete Comment
+              </button>
             </div>
           </div>
         </div>
@@ -137,6 +198,6 @@ const PostCommentsPage = () => {
       {totalPages > 0 && <div className="pagination">{renderPagination()}</div>}
     </div>
   );
-}
+};
 
 export default PostCommentsPage;

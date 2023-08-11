@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const { auth } = useContext(AuthContext);
-  console.log("auth", auth);
   return (
     <nav className="bg-blue-400 border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">

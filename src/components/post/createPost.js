@@ -18,7 +18,6 @@ const CreatePost = () => {
         body: body,
       },
     };
-    console.log("auth", auth.token);
     try {
       const response = await axios.post("/posts", postData, {
         headers: {
@@ -71,7 +70,7 @@ const CreatePost = () => {
               id="body"
               type="body"
               value={body}
-              placeholder=" Enter data"
+              placeholder=" Enter comment..."
               onChange={(e) => setBody(e.target.value)}
               required=""
             />
@@ -85,13 +84,6 @@ const CreatePost = () => {
           </button>
         </form>
       </div>
-
-      {data && (
-        <div>
-          <h3>Response:</h3>
-          <pre>{JSON.stringify(data, null, 2)}</pre>
-        </div>
-      )}
     </div>
   );
 };

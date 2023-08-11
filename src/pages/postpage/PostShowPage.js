@@ -1,7 +1,8 @@
 // PostShowPage.js
 import React, { useState, useEffect } from "react";
 import axios from "../../Api/axios";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import PostCommentsPage from "./PostCommentsPage";
 
 const PostShowPage = (props) => {
   const [post, setPost] = useState(null);
@@ -40,10 +41,9 @@ const PostShowPage = (props) => {
             <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
               <p>User: {post.user.display_name}</p>
             </span>
-            <span className="inline-block bg-blue-500 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-              <Link className="btn btn-blue" to={`/posts/${post.id}/comments`}>
-                Show Comments
-              </Link>
+            <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 mt-7">
+              <h5 className="font-bold text-xl mb-2">Comments of Above post</h5>
+              <PostCommentsPage id={post.id} />
             </span>
           </div>
         </div>
@@ -52,6 +52,6 @@ const PostShowPage = (props) => {
       )}
     </div>
   );
-}
+};
 
 export default PostShowPage;

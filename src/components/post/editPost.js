@@ -14,7 +14,6 @@ const EditPost = () => {
     const fetchPost = async () => {
       try {
         const response = await axios.get(`/posts/${post_id}`);
-        console.log("response", response);
         setTitle(response.data?.post?.title);
         setBody(response.data?.post?.body);
       } catch (error) {
@@ -89,7 +88,7 @@ const EditPost = () => {
               id="body"
               type="body"
               value={body}
-              placeholder=" Enter data"
+              placeholder=" Enter comment..."
               onChange={(e) => setBody(e.target.value)}
               required=""
             />
@@ -103,14 +102,6 @@ const EditPost = () => {
           </button>
         </form>
       </div>
-
-      {date && (
-        <div>
-          <h3>Updated Post:</h3>
-          <p>Title: {date.title}</p>
-          <p>Body: {date.body}</p>
-        </div>
-      )}
     </div>
   );
 };
