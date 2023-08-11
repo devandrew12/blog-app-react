@@ -1,13 +1,14 @@
 import axios from "../../Api/axios";
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import AuthContext from "../../Context/AuthProvider";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [data, setData] = useState(null);
   const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +25,6 @@ const CreatePost = () => {
           Authorization: `Bearer ${auth.token}`,
         },
       });
-      setData(response?.data);
     } catch (error) {
       console.error("Error creating post:", error);
     }
@@ -79,6 +79,7 @@ const CreatePost = () => {
             type="submit"
             disabled={!title || !body}
             className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            onClick={() => navigate(-1)}
           >
             Create Post
           </button>
