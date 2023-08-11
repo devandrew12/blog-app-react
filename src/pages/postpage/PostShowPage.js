@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../../Api/axios";
 import { Link, useParams } from "react-router-dom";
 
-function PostShowPage(props) {
+const PostShowPage = (props) => {
   const [post, setPost] = useState(null);
   const { id } = useParams();
 
