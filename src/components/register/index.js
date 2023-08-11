@@ -60,7 +60,7 @@ const Register = () => {
     <>
       {success ? (
         <section>
-          <h1 className="text-6xl">Success!</h1>
+          <h1>Success!</h1>
           <p>
             <a href="/login">Login In</a>
           </p>
@@ -92,7 +92,7 @@ const Register = () => {
             />
             <br />
             <br />
-            <label className="text-6xl">Password:</label>
+            <label >Password:</label>
             <input
               type="password"
               id="password"
