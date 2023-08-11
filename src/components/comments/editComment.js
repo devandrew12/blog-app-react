@@ -33,11 +33,7 @@ const EditComment = ({ commentId, initialContent, onCommentEdited }) => {
 
   return (
     <div>
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <h2 className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          Edit Comment
-        </h2>
-
+      <div className="flex flex-col items-center justify-center">
         <form
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
           onSubmit={handleSubmit}

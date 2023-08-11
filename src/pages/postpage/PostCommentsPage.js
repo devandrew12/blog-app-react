@@ -158,12 +158,9 @@ const PostCommentsPage = ({ id }) => {
           <div className="max-w-2xl content-center rounded overflow-hidden shadow-lg mx-auto text-center">
             <div className="px-6 py-4">
               <div className="font-bold text-xl mb-2">
-                <h2>
-                  {postComment.id}
-                  {postComment.title}
-                </h2>
+                <h2>ID - {postComment.id}</h2>
               </div>
-              <p className="text-gray-700 text-base">{postComment.body}</p>
+              <p className="text-gray-700 text-base">{postComment.content}</p>
             </div>
             <div className="px-6 pt-4 pb-2">
               <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
@@ -172,25 +169,29 @@ const PostCommentsPage = ({ id }) => {
               <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
                 <p>User: {postComment.user.display_name}</p>
               </span>
-              <button
-                className="bg-blue-500 hover:bg-blue-700 inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-                onClick={() => setEditCommentId(postComment.id)}
-              >
-                Edit Comment
-              </button>
-              {editCommentId === postComment.id && (
-                <EditComment
-                  commentId={postComment.id}
-                  initialContent={postComment.content}
-                  onCommentEdited={handleCommentEdited}
-                />
+              {postComment.user.id === auth.id && (
+                <>
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                    onClick={() => setEditCommentId(postComment.id)}
+                  >
+                    Edit Comment
+                  </button>
+                  {editCommentId === postComment.id && (
+                    <EditComment
+                      commentId={postComment.id}
+                      initialContent={postComment.content}
+                      onCommentEdited={handleCommentEdited}
+                    />
+                  )}
+                  <button
+                    className="bg-red-500 hover:bg-red-700 inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                    onClick={() => handleCommentDeleted(postComment.id)}
+                  >
+                    Delete Comment
+                  </button>
+                </>
               )}
-              <button
-                className="bg-red-500 hover:bg-red-700 inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-                onClick={() => handleCommentDeleted(postComment.id)}
-              >
-                Delete Comment
-              </button>
             </div>
           </div>
         </div>

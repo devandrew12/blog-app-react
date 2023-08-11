@@ -121,7 +121,7 @@ function PostsPage() {
         All Posts
       </h5>
       <div>
-        <span className="flex justify-start">
+        <span className="mx-auto text-center">
           <Link to="/createposts">
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Create Post
@@ -152,19 +152,26 @@ function PostsPage() {
                   Show Post
                 </Link>
               </span>
-              <span className="inline-block bg-blue-500 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                <Link className="btn btn-blue" to={`/posts/${post.id}/edit`}>
-                  Edit Post
-                </Link>
-              </span>
-              <span className="inline-block bg-red-500 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                <button
-                  className="btn btn-red"
-                  onClick={() => handleDelete(post.id)}
-                >
-                  Delete Post
-                </button>
-              </span>
+              {post.user.id === auth.id && (
+                <>
+                  <span className="inline-block bg-blue-500 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                    <Link
+                      className="btn btn-blue"
+                      to={`/posts/${post.id}/edit`}
+                    >
+                      Edit Post
+                    </Link>
+                  </span>
+                  <span className="inline-block bg-red-500 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                    <button
+                      className="btn btn-red"
+                      onClick={() => handleDelete(post.id)}
+                    >
+                      Delete Post
+                    </button>
+                  </span>
+                </>
+              )}
             </div>
           </div>
         </div>

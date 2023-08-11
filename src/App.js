@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
 
+import AuthContext from "./Context/AuthProvider";
 import CreatePost from "./components/post/createPost";
 import LoginForm from "./components/loginform";
 import PostCommentsPage from "./pages/postpage/PostCommentsPage";
@@ -12,6 +13,7 @@ import Logout from "./components/logout";
 import EditPost from "./components/post/editPost";
 
 const App = () => {
+  const { auth } = useContext(AuthContext);
   return (
     <div>
       <Navbar />
@@ -21,10 +23,14 @@ const App = () => {
         <Route path="/posts" element={<PostPage />} />
         <Route path="/posts/:id" element={<PostShowPage />} />
         <Route path="/posts/:id/comments" element={<PostCommentsPage />} />
-        <Route path="/createposts" element={<CreatePost />} />
-        <Route path="/posts/:post_id/edit" element={<EditPost />} />
+        {auth.login && (
+          <>
+            <Route path="/createposts" element={<CreatePost />} />
+            <Route path="/posts/:post_id/edit" element={<EditPost />} />
 
-        <Route path="/logout" element={<Logout />} />
+            <Route path="/logout" element={<Logout />} />
+          </>
+        )}
       </Routes>
     </div>
   );
