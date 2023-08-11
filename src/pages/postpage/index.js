@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../Api/axios";
 import "./post.css";
+import { Link } from "react-router-dom";
 
 function PostsPage() {
   const [posts, setPosts] = useState([]);
@@ -123,17 +124,15 @@ function PostsPage() {
                 <p>User: {post.user.display_name}</p>
               </span>
               <span className="inline-block bg-blue-500 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                <button className="btn btn-blue">Show</button>
+                <Link className="btn btn-blue" to={`/posts/${post.id}`}>
+                  Show
+                </Link>
               </span>
             </div>
           </div>
         </div>
       ))}
-      {totalPages > 0 && (
-        <div className="pagination">
-          {renderPagination()}
-        </div>
-      )}
+      {totalPages > 0 && <div className="pagination">{renderPagination()}</div>}
     </div>
   );
 }

@@ -4,6 +4,7 @@ import PostPage from "./pages/postpage";
 import Register from "./components/register";
 import Logout from "./components/logout";
 import LoginForm from "./components/loginform";
+import PostShowPage from "./pages/postpage/PostShowPage";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
@@ -54,7 +55,9 @@ const App = () => {
         />
         <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/postpage" element={<PostPage/>} />
+        <Route path="/posts" element={<PostPage/>} />
+        <Route path="/posts/:id" element={<PostShowPage />} />
+        <Route path="/posts/:id/comments" element={<PostShowPage />} />  
         {/* <Route path="/post">
           {isLoggedIn ? <PostPage /> : <LoginForm onLogin={handleLogin} />}
         </Route> */}
