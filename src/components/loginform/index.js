@@ -1,8 +1,9 @@
-import { useRef, useState, useEffect, useContext } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import axios from "../../Api/axios";
+
 import AuthContext from "../../Context/AuthProvider";
 
-const LOGIN_URL = "/auth";
+const LOGIN_URL = "/posts/post_id";
 
 const LoginForm = () => {
   const { setAuth } = useContext(AuthContext);
@@ -35,7 +36,6 @@ const LoginForm = () => {
         }
       );
       console.log(JSON.stringify(response?.data));
-      //console.log(JSON.stringify(response));
       const accessToken = response?.data?.accessToken;
       setAuth({ email, password, accessToken });
       setEmail("");
@@ -76,9 +76,9 @@ const LoginForm = () => {
           </p>
           <h1>Sign In</h1>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="email">Email:</label>
+            <label >Email:</label>
             <input
-              type="text"
+              type="email"
               id="email"
               ref={userRef}
               autoComplete="off"
@@ -87,7 +87,7 @@ const LoginForm = () => {
               required
             />
 
-            <label htmlFor="password">Password:</label>
+            <label>Password:</label>
             <input
               type="password"
               id="password"
@@ -101,7 +101,6 @@ const LoginForm = () => {
             Need an Account?
             <br />
             <span className="line">
-              {/*put router link here*/}
               <a href="/register">Sign Up</a>
             </span>
           </p>

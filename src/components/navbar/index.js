@@ -5,11 +5,9 @@ function Navbar() {
   return (
     <nav className="bg-blue-400 border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a className="flex items-center">
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            Blog App
-          </span>
-        </a>
+        <span className="flex items-center self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          Blog App
+        </span>
         <button
           data-collapse-toggle="navbar-default"
           type="button"
@@ -38,27 +36,27 @@ function Navbar() {
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 dark:border-gray-700">
             <li>
               <a
-                href="#"
+                href="/"
                 className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
                 aria-current="page"
               >
-                <Link to="/">Home</Link>
+                Home
               </a>
             </li>
             <li>
               <a
-                href="#"
+                href="/posts"
                 className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
-                <Link to="/posts">Posts</Link>
+                Posts
               </a>
             </li>
             <li>
               <a
-                href="#"
+                href="/register"
                 className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
-                <Link to="/register">Create Account</Link>
+                Create Account
               </a>
             </li>
           </ul>

@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "../../Api/axios";
 
 const REGISTER_URL = "/users";
@@ -8,13 +8,8 @@ const Register = () => {
   const errRef = useRef();
 
   const [email, setEmail] = useState("");
-  const [userFocus, setEmailFocus] = useState(false);
-
   const [password, setPassword] = useState("");
-  const [pwdFocus, setPasswordFocus] = useState(false);
-
   const [displayName, setDisplayName] = useState("");
-  const [matchFocus, setDisplayNameFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
@@ -87,32 +82,28 @@ const Register = () => {
               onChange={(e) => setEmail(e.target.value)}
               value={email}
               required
-            //   onFocus={() => setEmailFocus(true)}
-            //   onBlur={() => setEmailFocus(false)}
+              //   onFocus={() => setEmailFocus(true)}
+              //   onBlur={() => setEmailFocus(false)}
             />
             <br />
             <br />
-            <label >Password:</label>
+            <label>Password:</label>
             <input
               type="password"
               id="password"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
               required
-            //   onFocus={() => setPasswordFocus(true)}
-            //   onBlur={() => setPasswordFocus(false)}
             />
             <br />
             <br />
-            <label >Name:</label>
+            <label>Name:</label>
             <input
               type="text"
               id="display_name"
               onChange={(e) => setDisplayName(e.target.value)}
               value={displayName}
               required
-            //   onFocus={() => setDisplayNameFocus(true)}
-            //   onBlur={() => setDisplayNameFocus(false)}
             />
             <br />
             <br />
@@ -126,8 +117,7 @@ const Register = () => {
             Already registered?
             <br />
             <span className="line">
-              {/*put router link here*/}
-              <a href="#">Sign In</a>
+              <a href="/register">Sign In</a>
             </span>
           </p>
         </section>

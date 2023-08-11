@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
-import PostPage from "./pages/postpage";
-import Register from "./components/register";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+
 import LoginForm from "./components/loginform";
-import PostShowPage from "./pages/postpage/PostShowPage";
 import PostCommentsPage from "./pages/postpage/PostCommentsPage";
+import PostPage from "./pages/postpage";
+import PostShowPage from "./pages/postpage/PostShowPage";
+import Register from "./components/register";
 import Navbar from "./components/navbar";
 
 const App = () => {
@@ -12,10 +13,6 @@ const App = () => {
     <div>
       <Navbar />
       <Routes>
-        {/* <Route
-          path="/"
-          element={isLoggedIn ? <PostPage /> : <Navigate to={"/login"} />}
-        /> */}
         <Route path="/" element={<LoginForm />} />
         <Route path="/register" element={<Register />} />
         <Route path="/posts" element={<PostPage />} />
