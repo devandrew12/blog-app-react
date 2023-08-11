@@ -1,25 +1,66 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { Route, Routes, Link, Navigate } from "react-router-dom";
+import PostPage from "./pages/postpage";
+import Register from "./components/register";
+import Logout from "./components/logout";
+import LoginForm from "./components/loginform";
 
-function App() {
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>React Authentication Example</h1>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          {isLoggedIn ? (
+            <>
+              <li>
+                <Link to="/">Post</Link>
+              </li>
+              <li>
+                <Logout onLogout={handleLogout} />
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <br />
+              <li>
+                <Link to="/register">Create Account</Link>
+              </li>
+            </>
+          )}
+        </ul>
+      </nav>
+      <Routes>
+        <Route
+          path="/"
+          element={isLoggedIn ? <PostPage /> : <Navigate to={"/login"} />}
+        />
+        <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/postpage" element={<PostPage/>} />
+        {/* <Route path="/post">
+          {isLoggedIn ? <PostPage /> : <LoginForm onLogin={handleLogin} />}
+        </Route> */}
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;
