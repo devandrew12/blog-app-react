@@ -1,13 +1,29 @@
+import React, { useState, useEffect, useContext } from "react";
 import axios from "../../Api/axios";
-import React, { useContext, useState } from "react";
-
 import AuthContext from "../../Context/AuthProvider";
+import { useParams } from "react-router-dom";
 
-const CreatePost = () => {
+const EditPost = () => {
+  const { auth } = useContext(AuthContext);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [data, setData] = useState(null);
-  const { auth } = useContext(AuthContext);
+  const [date, setData] = useState(null);
+  const { post_id } = useParams();
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await axios.get(`/posts/${post_id}`);
+        console.log("response", response);
+        setTitle(response.data?.post?.title);
+        setBody(response.data?.post?.body);
+      } catch (error) {
+        console.error("Error fetching post:", error);
+      }
+    };
+
+    fetchPost();
+  }, [auth.token, post_id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,16 +34,18 @@ const CreatePost = () => {
         body: body,
       },
     };
-    console.log("auth", auth.token);
+
     try {
-      const response = await axios.post("/posts", postData, {
+      const date = await axios.patch(`/posts/${post_id}/edit`, postData, {
         headers: {
           Authorization: `Bearer ${auth.token}`,
         },
       });
-      setData(response?.data);
+
+      const data = date.data.post;
+      setData(data);
     } catch (error) {
-      console.error("Error creating post:", error);
+      console.error("Error editing post:", error);
     }
   };
 
@@ -35,7 +53,7 @@ const CreatePost = () => {
     <div>
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <h2 className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          Create a New Post
+          Edit Post
         </h2>
 
         <form
@@ -81,19 +99,20 @@ const CreatePost = () => {
             disabled={!title || !body}
             className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
           >
-            Create Post
+            Edit Post
           </button>
         </form>
       </div>
 
-      {data && (
+      {date && (
         <div>
-          <h3>Response:</h3>
-          <pre>{JSON.stringify(data, null, 2)}</pre>
+          <h3>Updated Post:</h3>
+          <p>Title: {date.title}</p>
+          <p>Body: {date.body}</p>
         </div>
       )}
     </div>
   );
 };
 
-export default CreatePost;
+export default EditPost;
